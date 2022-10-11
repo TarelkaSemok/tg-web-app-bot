@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>python-telegram-bot Example WebApp</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
     <script src="https://test-epay.homebank.kz/payform/payment-api.js"></script>
 </head>
 
@@ -13,12 +12,12 @@
     function randomIdFromInterval(min, max) { // min and max included 
         return Math.floor(Math.random() * (max - min + 1) + min).toString()
     }
-    let my_amount = 1200;
+    var my_amount = 1200;
     // let my_invoiceid = '005681201';
-    let my_invoiceid = randomIdFromInterval(120000000, 920000000);
+    var my_invoiceid = randomIdFromInterval(120000000, 920000000);
 
-    let auth_json;    
-    let xhr = new XMLHttpRequest();
+    var auth_json;    
+    var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://testoauth.homebank.kz/epay2/oauth2/token");
     xhr.onload = () => {
         auth_json = JSON.parse(xhr.responseText);
@@ -40,16 +39,19 @@
     var createPaymentObject = function(auth, invoiceId, amount) {
             var paymentObject = {
 					invoiceId: invoiceId,
-					backLink: "", // "https://example.kz/success.html",
-					failureBackLink: "", // "https://example.kz/failure.html",
-					postLink: "", // "https://example.kz/",
-					failurePostLink: "", //"https://example.kz/order/1123/fail",
+					backLink: "https://example.kz/success.html",
+					failureBackLink: "https://example.kz/failure.html",
+					postLink: "https://example.kz/",
+					failurePostLink: "https://example.kz/order/1123/fail",
 					language: "RU",
-					description: "Тест оплата в тест магазине",
+					description: "Оплата в интернет магазине",
 					accountId: "testuser1",
 					terminal: "67e34d63-102f-4bd1-898e-370781d0074d",
 					amount: amount,
-					currency: "KZT"
+					currency: "KZT",
+                    phone: "77777777777",
+                    email: "example@example.com",
+                    cardSave: "true"
                 };
             paymentObject.auth = auth;
             return paymentObject;
@@ -61,7 +63,8 @@
         .show()
         .onClick(function () {
             xhr.send(data);
-            halyk.showPaymentWidget(createPaymentObject(auth_json, my_invoiceid, my_amount), (data) => {console.log(data)})
+            // halyk.showPaymentWidget(createPaymentObject(auth_json, my_invoiceid, my_amount), (data) => {console.log(data)})
+            halyk.pay(createPaymentObject(auth_json, my_invoiceid, my_amount));
         })
 </script>
 
