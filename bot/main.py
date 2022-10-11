@@ -42,13 +42,13 @@ bot_token = config["main_settings"]["token"]
 
 # Define a `/start` command handler.
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a message with a button that opens a the web app."""
+    """Send a message with a button that opens the web app."""
     await update.message.reply_text(
         "Please press the button below to choose a color via the WebApp.",
         reply_markup=ReplyKeyboardMarkup.from_button(
             KeyboardButton(
                 text="Open the color picker!",
-                web_app=WebAppInfo(url="https://tarelkasemok.github.io/tg-web-app-bot/page/index.html"),
+                web_app=WebAppInfo(url="https://tarelkasemok.github.io/tg-web-app-bot/index.html"),
             )
         ),
     )
