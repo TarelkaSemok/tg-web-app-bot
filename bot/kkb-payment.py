@@ -42,7 +42,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_markup=ReplyKeyboardMarkup.from_button(
             KeyboardButton(
                 text="Оплатить",
-                web_app=WebAppInfo(url="https://tarelkasemok.github.io/tg-web-app-bot/kkb_pay.html"),
+                web_app=WebAppInfo(url="https://tarelkasemok.github.io/tg-web-app-bot/page/kkb_pay.html"),
             )
         ),
     )
@@ -59,23 +59,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 #         f"corresponding RGB value is <code>{tuple(data['rgb'].values())}</code>.",
 #         reply_markup=ReplyKeyboardRemove(),
 #     )
-
-def kkb_get_auth_token():
-    url = "https://testoauth.homebank.kz/epay2/oauth2/token"
-    req_body = {
-            "grant_type":       "client_credentials",
-            "scope": 			"payment",
-            "client_id": 		"test",
-            "client_secret": 	"yF587AV9Ms94qN2QShFzVR3vFnWkhjbAK3sG",
-            "invoiceID": 		"005681201",
-            "amount": 		    100,
-            "curency": 		    "KZT",
-            "terminal": 		"67e34d63-102f-4bd1-898e-370781d0074d",
-            "postLink":         "",
-            "failurePostLink":  ""
-    }
-    req = requests.post(url, data=req_body)
-    print(req.text)
 
 
 def main() -> None:

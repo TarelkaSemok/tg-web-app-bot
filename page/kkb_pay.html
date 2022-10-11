@@ -10,8 +10,12 @@
 </head>
 
 <script>
-    let amount = 1200;
-    let invoiceID = '005681201';
+    function randomIdFromInterval(min, max) { // min and max included 
+        return Math.floor(Math.random() * (max - min + 1) + min).toString()
+    }
+    let my_amount = 1200;
+    // let my_invoiceid = '005681201';
+    let my_invoiceid = randomIdFromInterval(120000000, 920000000);
 
     let auth_json;    
     let xhr = new XMLHttpRequest();
@@ -26,18 +30,16 @@
     data.append('scope',                'payment');
     data.append('client_id',            'test');
     data.append('client_secret',        'yF587AV9Ms94qN2QShFzVR3vFnWkhjbAK3sG');
-    data.append('invoiceID',            invoiceID);
-    data.append('amount',               amount);
+    data.append('invoiceID',            my_invoiceid);
+    data.append('amount',               my_amount);
     data.append('curency',              'KZT');
     data.append('terminal',             '67e34d63-102f-4bd1-898e-370781d0074d');
     // data.append('postLink',             '');
     // data.append('failurePostLink',      '');
-    
-    xhr.send(data);
 
     var createPaymentObject = function(auth, invoiceId, amount) {
             var paymentObject = {
-					invoiceId: "Номер заказа",
+					invoiceId: invoiceId,
 					backLink: "", // "https://example.kz/success.html",
 					failureBackLink: "", // "https://example.kz/failure.html",
 					postLink: "", // "https://example.kz/",
@@ -58,7 +60,8 @@
         .setText('[тест] Оплатить')
         .show()
         .onClick(function () {
-            halyk.showPaymentWidget(createPaymentObject(auth, invoiceId, amount), (data) => {console.log(data)})
+            xhr.send(data);
+            halyk.showPaymentWidget(createPaymentObject(auth_json["access_token"], my_invoiceid, my_amount), (data) => {console.log(data)})
         })
 </script>
 
