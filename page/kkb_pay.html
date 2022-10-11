@@ -22,6 +22,7 @@
     xhr.onload = () => {
         auth_json = JSON.parse(xhr.responseText);
         console.log(auth_json);
+        halyk.pay(createPaymentObject(auth_json, my_invoiceid, my_amount));
     }
     
     var data = new FormData();
@@ -64,7 +65,6 @@
         .onClick(function () {
             xhr.send(data);
             // halyk.showPaymentWidget(createPaymentObject(auth_json, my_invoiceid, my_amount), (data) => {console.log(data)})
-            halyk.pay(createPaymentObject(auth_json, my_invoiceid, my_amount));
         })
 </script>
 
