@@ -61,7 +61,7 @@
         .show()
         .onClick(function () {
             xhr.send(data);
-            halyk.showPaymentWidget(createPaymentObject(auth_json["access_token"], my_invoiceid, my_amount), (data) => {console.log(data)})
+            halyk.showPaymentWidget(createPaymentObject(auth_json, my_invoiceid, my_amount), (data) => {console.log(data)})
         })
 </script>
 
