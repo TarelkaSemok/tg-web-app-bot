@@ -48,7 +48,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_markup=ReplyKeyboardMarkup.from_button(
             KeyboardButton(
                 text="Open the color picker!",
-                web_app=WebAppInfo(url="https://tarelkasemok.github.io/tg-web-app-bot/index.html"),
+                web_app=WebAppInfo(url="https://tarelkasemok.github.io/tg-web-app-bot/color-picker.html"),
             )
         ),
     )

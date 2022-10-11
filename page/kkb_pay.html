@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>python-telegram-bot Example WebApp</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script src="https://test-epay.homebank.kz/payform/payment-api.js"></script>
+</head>
+
+<script>
+    let amount = 1200;
+    let invoiceID = '005681201';
+
+    let auth_json;    
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://testoauth.homebank.kz/epay2/oauth2/token");
+    xhr.onload = () => {
+        auth_json = JSON.parse(xhr.responseText);
+        console.log(auth_json);
+    }
+    
+    var data = new FormData();
+    data.append('grant_type',           'client_credentials');
+    data.append('scope',                'payment');
+    data.append('client_id',            'test');
+    data.append('client_secret',        'yF587AV9Ms94qN2QShFzVR3vFnWkhjbAK3sG');
+    data.append('invoiceID',            invoiceID);
+    data.append('amount',               amount);
+    data.append('curency',              'KZT');
+    data.append('terminal',             '67e34d63-102f-4bd1-898e-370781d0074d');
+    // data.append('postLink',             '');
+    // data.append('failurePostLink',      '');
+    
+    xhr.send(data);
+
+    var createPaymentObject = function(auth, invoiceId, amount) {
+            var paymentObject = {
+					invoiceId: "Номер заказа",
+					backLink: "", // "https://example.kz/success.html",
+					failureBackLink: "", // "https://example.kz/failure.html",
+					postLink: "", // "https://example.kz/",
+					failurePostLink: "", //"https://example.kz/order/1123/fail",
+					language: "RU",
+					description: "Тест оплата в тест магазине",
+					accountId: "testuser1",
+					terminal: "67e34d63-102f-4bd1-898e-370781d0074d",
+					amount: amount,
+					currency: "KZT"
+                };
+            paymentObject.auth = auth;
+            return paymentObject;
+        };
+
+    Telegram.WebApp.ready();
+    Telegram.WebApp.MainButton
+        .setText('[тест] Оплатить')
+        .show()
+        .onClick(function () {
+            halyk.showPaymentWidget(createPaymentObject(auth, invoiceId, amount), (data) => {console.log(data)})
+        })
+</script>
+
+<body>
+<h1>Hello!</h1>
+</body>
+
+<script type="text/javascript">
+    Telegram.WebApp.expand();
+</script>
+
+</html>
